@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
-const ClientRoutes = require('./routes/screening')
+const RegistrationRoutes = require('./routes/registration')
+const ScreeningRoutes = require('./routes/screening')
 const LoginRoutes = require('./routes/login')
 const UserRoutes = require('./routes/user')
 const connection = require('./connection');
@@ -11,7 +12,8 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/screening', ClientRoutes);
+app.use('/registration', RegistrationRoutes);
+app.use('/screening', ScreeningRoutes);
 app.use('/login', LoginRoutes);
 app.use('/user', UserRoutes);
 

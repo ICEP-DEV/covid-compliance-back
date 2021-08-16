@@ -1,6 +1,6 @@
 const express = require('express');
 const mysql = require('mysql');
-const ClientRoutes = require('./routes/client')
+const ClientRoutes = require('./routes/screening')
 const RegRoutes = require('./routes/registration')
 const LoginRoutes = require('./routes/login')
 const UserRoutes = require('./routes/user')
@@ -12,7 +12,7 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/client', ClientRoutes);
+app.use('/screening', ClientRoutes);
 app.use('/registration', RegRoutes);
 app.use('/login', LoginRoutes);
 app.use('/user', UserRoutes);

@@ -29,4 +29,14 @@ Router.get('/student', (req, res) => {
     })
 });
 
+Router.get('/visitor', (req, res) => {
+    connection.query('SELECT * FROM user where role = "visitor"', (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err)
+        }
+    })
+});
+
 module.exports = Router;

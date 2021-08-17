@@ -29,6 +29,7 @@ Router.post('/', (req, res, next) => {
     home_lang = req.body.home_lang;
     citizenship = req.body.citizenship;
     email = req.body.email;
+    role = req.body.role;
 
     // student (stud_num, stud_email)
     stud_num = req.body.stud_num;
@@ -39,7 +40,7 @@ Router.post('/', (req, res, next) => {
 
     // visitor
 
-connection.query("INSERT INTO user VALUES('"+ id_number +"', '"+ gender +"', '" + birthdate +"', '"+ marital_status +"', '"+ home_lang +"', '"+ citizenship +"', '"+ email +"')", (err, rows, fields) => {
+connection.query("INSERT INTO user VALUES('"+ id_number +"', '"+ gender +"', '" + birthdate +"', '"+ marital_status +"', '"+ home_lang +"', '"+ citizenship +"', '"+ email +"', '"+ role +"')", (err, rows, fields) => {
     if(!err){
         res.send(rows);
     }else{

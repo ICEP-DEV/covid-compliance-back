@@ -73,11 +73,19 @@ Router.post('/', (req, res, next) => {
 
     tem = temp.toString();
     pos = tem.indexOf('.');
+    // Date = new Date();
+    dat =  new Date();
+
+    day = ("0" + dat.getDate()).slice(-2);
+    month = ("0" + (dat.getMonth() + 1)).slice(-2);
+    year = dat.getFullYear();
+
+    date = year+'-'+month+'-'+day;
 
     console.log(pos);
     if(pos <=2)
     {
-        connection.query("INSERT INTO screen VALUES('"+ screen_id +"', '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptom +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', 'vis','"+ camp_id +"')", (err, rows, fields) => {
+        connection.query("INSERT INTO screen VALUES('"+ screen_id +"', '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptom +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', 'vis','"+ camp_id +"','"+ date +"')", (err, rows, fields) => {
             if(!err){
                 res.send(rows);
             }else{

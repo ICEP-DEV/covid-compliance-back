@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
-
+//email = session[email];
 Router.get('/staff', (req, res) => {
     connection.query('SELECT * FROM user where role = "staff"', (err, rows, fields) => {
         if(!err){

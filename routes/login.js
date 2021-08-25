@@ -15,9 +15,8 @@ Router.post('/', (req, res, next) => {
 
     connection.query("SELECT * FROM user WHERE email = '" + email +"' AND password = '" + password +"'", (err, rows, fields) => {
         if(!err){
-            res.send("Login successfully");
             res.send(rows);
-            console.log(rows);
+            //set session email = session[rows[emmail]]
         }else{
             console.log(err);
         }

@@ -8,14 +8,15 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
-Router.get('/', (req, res, next) => {
+Router.post('/', (req, res, next) => {
 
-    email = req.body.email;
+    email = req.body.username;
     password = req.body.password;
 
     connection.query("SELECT * FROM user WHERE email = '" + email +"' AND password = '" + password +"'", (err, rows, fields) => {
         if(!err){
-            console.log("Login successfully");
+            res.send("Login successfully");
+            res.send(rows);
             console.log(rows);
         }else{
             console.log(err);

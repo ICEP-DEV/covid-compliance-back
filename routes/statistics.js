@@ -3,8 +3,7 @@ const app = express();
 const mysql = require('mysql');
 const Router = express.Router();
 const connection = require('../connection');
-//const tut_database = require('../tut_database_con');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());

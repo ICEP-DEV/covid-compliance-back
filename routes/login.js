@@ -18,7 +18,7 @@ Router.post('/', (req, res, next) => {
         if(err || user.length === 0){   
             res.send(err)
         }else{
-            jwt.sign({user}, 'secretkey', { expiresIn: '300s' }, (err, token) => {
+            jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
                 res.json({token});
             });
         }

@@ -14,7 +14,7 @@ Router.get('/admin', verifyToken,(req, res) => {
         if(err) {
             res.sendStatus(403);
         } else {
-            connection.query('SELECT * FROM staff', (err, rows, fields) => {
+            connection.query('SELECT * FROM user', (err, rows, fields) => {
                 if(!err){
                     res.json({message: 'DONE!', authData})
                 }else{

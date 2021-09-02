@@ -69,4 +69,24 @@ Router.get('/campus/symptoms', (req, res) => {
     })
 });
 
+Router.get('/campus/symptoms', (req, res) => {
+    connection.query('SELECT count(*) as "sympNum" FROM screen,user where camp_id = "rank" and screen_date = (SELECT DATE(SYSDATE())) and temp > 36', (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err)
+        }
+    })
+});
+
+Router.get('/hotspot/:campus', (req, res) => {
+    connection.query('SELECT count(*) as "total_hotspot" FROM screen where camp_id = "'+ req.params.campus +'" and temp > 36.9' , (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err) 
+        }
+    })
+});
+
 module.exports = Router;

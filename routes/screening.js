@@ -69,11 +69,9 @@ Router.post('/', (req, res, next) => {
     if(breathing){breathing = "Yes";}else{breathing = "No"}
     if(fever){fever = "Yes";}else{fever = "No"}
     if(cough){cough = "Yes";}else{cough = "No"}
-    // screen_id temp campus cough breathing fever symptoms contact covid_contact travel staff_num stud_num visitor_id camp_id
 
     tem = temp.toString();
     pos = tem.indexOf('.');
-    // Date = new Date();
     dat =  new Date();
 
     day = ("0" + dat.getDate()).slice(-2);

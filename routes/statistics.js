@@ -79,8 +79,8 @@ Router.get('/campus/symptoms', (req, res) => {
     })
 });
 
-Router.get('/hotspot/:campus', (req, res) => {
-    connection.query('SELECT count(*) as "total_hotspot" FROM screen where camp_id = "'+ req.params.campus +'" and temp > 36.9' , (err, rows, fields) => {
+Router.get('/hotspot/:campu', (req, res) => {
+    connection.query('SELECT count(*) as "total_hotspot" FROM screen where camp_id = "'+ req.params.campu +'" and temp > 36.9' , (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -88,5 +88,15 @@ Router.get('/hotspot/:campus', (req, res) => {
         }
     })
 });
+
+// Router.get('/hotspot/rank', (req, res) => {
+//     connection.query('SELECT count(*) as "total_hotspot" FROM screen where camp_id = "soshn" and temp > 36.9' , (err, rows, fields) => {
+//         if(!err){
+//             res.send(rows)
+//         }else{
+//             console.log(err) 
+//         }
+//     })
+// });
 
 module.exports = Router;

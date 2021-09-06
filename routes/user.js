@@ -9,12 +9,12 @@ const jwt =             require('jsonwebtoken');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
-Router.get('/admin', verifyToken,(req, res) => {
+Router.get('/user-profile', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if(err) {
-            res.sendStatus(403);
+            res.sendStatus(403); 
         } else {
-            connection.query('SELECT * FROM user', (err, rows, fields) => {
+            connection.query('SELECT * FROM user where role = "admin"', (err, rows, fields) => {
                 if(!err){
                     res.json({message: 'DONE!', authData})
                 }else{
@@ -26,7 +26,7 @@ Router.get('/admin', verifyToken,(req, res) => {
 });
 
 Router.get('/staff', (req, res) => {
-    connection.query('SELECT * FROM user where role = "staff"', (err, rows, fields) => {
+    connection.query('SELECT * FROM user where role = "admin"', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{

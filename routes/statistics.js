@@ -84,19 +84,9 @@ Router.get('/hotspot/:campu', (req, res) => {
         if(!err){
             res.send(rows)
         }else{
-            console.log(err) 
+            res.send(err)
         }
     })
 });
-
-// Router.get('/hotspot/rank', (req, res) => {
-//     connection.query('SELECT count(*) as "total_hotspot" FROM screen where camp_id = "soshn" and temp > 36.9' , (err, rows, fields) => {
-//         if(!err){
-//             res.send(rows)
-//         }else{
-//             console.log(err) 
-//         }
-//     })
-// });
 
 module.exports = Router;

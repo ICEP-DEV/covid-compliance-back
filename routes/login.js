@@ -19,7 +19,7 @@ Router.post('/', (req, res, next) => {
             res.send(err)
         }else{
             jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
-                res.json({token});
+                res.json({token, user});
             });
         }
     })

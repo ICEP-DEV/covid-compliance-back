@@ -8,13 +8,12 @@ const jwt =             require('jsonwebtoken');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
-
 Router.get('/admin-profile', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if(!err) {
             res.sendStatus(403);
         } else {
-            connection.query('SELECT * FROM user u, staff s where s.staff_role = "admin"', (err, rows, fields) => {
+            connection.query('SELECT * FROM user u, staff s where s.staff_role = "admin" AND u.id_number = s.id_number', (err, rows, fields) => {
                 if(!err){
                     res.send(rows)
                 }else{
@@ -26,7 +25,7 @@ Router.get('/admin-profile', verifyToken,(req, res) => {
 });
 
 Router.get('/staff', (req, res) => {
-    connection.query('SELECT * FROM user where role = "admin"', (err, rows, fields) => {
+    connection.query('SELECT * FROM user u, staff s where s.staff_role = "staff" AND u.id_number = s.id_number', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -36,7 +35,7 @@ Router.get('/staff', (req, res) => {
 });
 
 Router.get('/student', (req, res) => {
-    connection.query('SELECT * FROM user where role = "student"', (err, rows, fields) => {
+    connection.query('SELECT * FROM user u, student s where role = "student" AND u.id_number = s.id_number', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{

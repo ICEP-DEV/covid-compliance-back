@@ -15,11 +15,11 @@ Router.post('/', (req, res, next) => {
     password = req.body.password;
 
     if (username.split("@")[1] == "tut.ac.za"){
-        connection.query("SELECT * FROM user u, staff s WHERE s.staff_email = '"+ username +"' AND u.password = '"+ password +"'", (err, user, fields) => {
+        connection.query("SELECT * FROM user u, staff s WHERE u.id_number = s.id_number and s.staff_email = '"+ username +"' AND u.password = '"+ password +"'", (err, user, fields) => {
             if(err || user.length === 0){   
                 res.send(err)
             }else{
-                jwt.sign({user}, 'secretkey', { expiresIn: '3000s' }, (err, token) => {
+                jwt.sign({user}, 'secretkey', { expiresIn: '60s' }, (err, token) => {
                     res.json({token, user});
                 });
             }
@@ -29,7 +29,7 @@ Router.post('/', (req, res, next) => {
             if(err || user.length === 0){   
                 res.send(err)
             }else{
-                jwt.sign({user}, 'secretkey', { expiresIn: '30s' }, (err, token) => {
+                jwt.sign({user}, 'secretkey', { expiresIn: '60s' }, (err, token) => {
                     res.json({token, user});
                 });
             }

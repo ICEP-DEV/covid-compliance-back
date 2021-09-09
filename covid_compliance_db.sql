@@ -29,18 +29,8 @@ CREATE TABLE `campus` (
   `province` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
   PRIMARY KEY (`camp_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `campus`S
---
-
-LOCK TABLES `campus` WRITE;
-/*!40000 ALTER TABLE `campus` DISABLE KEYS */;
-INSERT INTO `campus` VALUES ('arc','Arcadia Campus','Arcadia','Gauteng','0083'),('art','Arts Campus','Arcadia','Gauteng','0007'),('emal','Emalehleni Campus','Witbank','Mpumalanga','1034'),('main','Pretoria Campus','Pretoria West','Gauteng','0183'),('pol','Polokwane Campus','Polokwane Ext 67','Polokwane','0699'),('rank','Ga-Rankuwa Campus','Ga-Rankuwa','Gauteng','0155'),('soshn','soshanguve North Campus','Soshnaguve','Gauteng','0152'),('soshs','soshanguve South Campus','Soshnaguve','Gauteng','0152');
-/*!40000 ALTER TABLE `campus` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `screen`
@@ -68,18 +58,8 @@ CREATE TABLE `screen` (
   `tested_date` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`screen_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `screen`
---
-
-LOCK TABLES `screen` WRITE;
-/*!40000 ALTER TABLE `screen` DISABLE KEYS */;
-INSERT INTO `screen` VALUES (1,362.5,'soshanguve North Campus','Yes','No','No','Aids','Yes','Yes','Yes',215498120,'vis','soshn',NULL,NULL,NULL,NULL),(2,362.5,'soshanguve North Campus','Yes','No','No','Aids','Yes','Yes','Yes',215498120,'vis','soshn',NULL,NULL,NULL,NULL),(3,362.5,'soshanguve North Campus','Yes','No','No','Aids','Yes','Yes','Yes',215498120,'vis','soshn',NULL,NULL,NULL,NULL),(4,362.5,'soshanguve North Campus','Yes','No','No','Aids','Yes','Yes','Yes',215498120,'vis','soshn',NULL,NULL,NULL,NULL),(5,32.5,'soshanguve North Campus','Yes','No','No','Aids','Yes','Yes','Yes',215498120,'vis','soshn',NULL,NULL,NULL,NULL),(6,327.5,'soshanguve North Campus','Yes','No','No','Aids','Yes','Yes','Yes',215498120,'vis','soshn',NULL,NULL,NULL,NULL),(7,0,'','Yes','No','No','','','','',0,'vis','soshn',NULL,NULL,NULL,NULL),(8,0,'','Yes','No','No','','','','',0,'vis','soshn',NULL,NULL,NULL,NULL),(9,0,'','Yes','No','No','','','','',0,'vis','soshn',NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `screen` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `staff`
@@ -90,21 +70,14 @@ DROP TABLE IF EXISTS `staff`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `staff` (
   `staff_num` int NOT NULL,
-  `id_num` int NOT NULL,
+  `id_number` varchar(13) NOT NULL,
   `staff_role` varchar(255) NOT NULL,
   `staff_email` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`staff_num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`staff_num`),
+  KEY `id_number` (`id_number`),
+  CONSTRAINT `staff_ibfk_1` FOREIGN KEY (`id_number`) REFERENCES `user` (`id_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `staff`
---
-
-LOCK TABLES `staff` WRITE;
-/*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-/*!40000 ALTER TABLE `staff` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `student`
@@ -116,19 +89,12 @@ DROP TABLE IF EXISTS `student`;
 CREATE TABLE `student` (
   `stud_num` int NOT NULL,
   `stud_email` varchar(255) NOT NULL,
-  `id_num` int DEFAULT NULL,
-  PRIMARY KEY (`stud_num`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_number` varchar(13) NOT NULL,
+  PRIMARY KEY (`stud_num`),
+  KEY `id_number` (`id_number`),
+  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`id_number`) REFERENCES `user` (`id_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `student`
---
-
-LOCK TABLES `student` WRITE;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -138,7 +104,9 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id_number` int NOT NULL,
+  `id_number` varchar(13) NOT NULL,
+  `fname` varchar(255) DEFAULT NULL,
+  `lname` varchar(255) DEFAULT NULL,
   `gender` varchar(255) NOT NULL,
   `marital_status` varchar(255) NOT NULL,
   `home_lang` varchar(255) NOT NULL,
@@ -146,23 +114,13 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `fname` varchar(255) DEFAULT NULL,
-  `lname` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `phone` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `camp_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_number`),
+  FOREIGN KEY (`camp_id`) REFERENCES `campus` (`camp_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (92101059,'Male','Single','isiZulu','RSA','mkhonkosi28@gmail.com','Student','nhlanhla',NULL,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `visitor`
@@ -173,8 +131,10 @@ DROP TABLE IF EXISTS `visitor`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `visitor` (
   `visitor_id` varchar(255) NOT NULL,
-  `id_numb` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_number` varchar(13) NOT NULL,
+  KEY `id_number` (`id_number`),
+  CONSTRAINT `visitor_ibfk_1` FOREIGN KEY (`id_number`) REFERENCES `user` (`id_number`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -185,10 +145,6 @@ LOCK TABLES `visitor` WRITE;
 /*!40000 ALTER TABLE `visitor` DISABLE KEYS */;
 /*!40000 ALTER TABLE `visitor` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping routines for database 'covid_compliance'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -199,4 +155,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-01 14:58:14
+-- Dump completed on 2021-09-09  1:33:36

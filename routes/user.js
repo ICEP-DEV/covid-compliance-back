@@ -39,6 +39,8 @@ Router.post('/student-profile', verifyToken,(req, res) => {
     });
 });
 
+// end profils
+
 Router.get('/staff', (req, res) => {
     connection.query('SELECT * FROM user u, staff s where s.staff_role = "staff" AND u.id_number = s.id_number', (err, rows, fields) => {
         if(!err){

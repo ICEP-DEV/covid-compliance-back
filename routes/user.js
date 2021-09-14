@@ -8,30 +8,33 @@ const jwt =             require('jsonwebtoken');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
-Router.get('/admin-profile', verifyToken,(req, res) => {
+
+Router.post('/admin-profile', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
-        if(!err) {
+        if(err) {
             res.sendStatus(403);
         } else {
-            connection.query('SELECT * FROM user u, staff s where s.staff_role = "admin" AND u.id_number = s.id_number', (err, rows, fields) => {
-                if(!err){
-                    res.send(rows)
-                }else{
-                    console.log(err)
-                }
-            }) 
+            res.send(authData.user)
         }
     });
 });
 
-Router.get('/student-profile', verifyToken,(req, res) => {
+Router.post('/staff-profile', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if(err) {
             res.sendStatus(403);
-        } else 
-        {
-            res.send(authData)
-            console.log(err)
+        } else {
+            res.send(authData.user)
+        }
+    });
+});
+
+Router.post('/student-profile', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+            res.send(authData.user)
         }
     });
 });
@@ -68,15 +71,14 @@ Router.get('/visitor', (req, res) => {
 
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
-    console.log(bearerHeader)
     if(typeof bearerHeader !== 'undefined') {
-        console.log(bearerHeader)
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
         req.token = bearerToken;
         next();
     } else {
         res.sendStatus(403);
+        console.log("verifyToken");
     }
 }
 

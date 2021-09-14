@@ -19,7 +19,7 @@ Router.post('/', (req, res, next) => {
             if(err || user.length === 0){   
                 res.send(err)
             }else{
-                jwt.sign({user}, 'secretkey', { expiresIn: '60s' }, (err, token) => {
+                jwt.sign({user}, 'secretkey', { expiresIn: '1h' }, (err, token) => {
                     res.json({token, user});
                 });
             }
@@ -29,7 +29,7 @@ Router.post('/', (req, res, next) => {
             if(err || user.length === 0){   
                 res.send(err)
             }else{
-                jwt.sign({user}, 'secretkey', { expiresIn: '60s' }, (err, token) => {
+                jwt.sign({user}, 'secretkey', { expiresIn: '1h' }, (err, token) => {
                     res.json({token, user});
                 });
             }

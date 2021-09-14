@@ -23,22 +23,6 @@ Router.get('/admin-profile', verifyToken,(req, res) => {
         }
     });
 });
-// delete later
-Router.get('/admin-profile', verifyToken,(req, res) => {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
-        if(!err) {
-            res.sendStatus(403);
-        } else {
-            connection.query('SELECT * FROM user u, staff s where s.staff_role = "admin" AND u.id_number = s.id_number', (err, rows, fields) => {
-                if(!err){
-                    res.send(rows)
-                }else{
-                    console.log(err)
-                }
-            }) 
-        }
-    });
-});
 
 Router.get('/student-profile', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {

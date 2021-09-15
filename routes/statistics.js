@@ -8,9 +8,14 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
+campus = "soshs";
 
-Router.get('/campus', (req, res) => {
-    connection.query('SELECT count(*) as "totnum" FROM screen where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE()))', (err, rows, fields) => {
+//daily
+Router.post('/campus', (req, res) => {
+    
+    campus = req.body.campusID;
+
+    connection.query('SELECT count(*) as "totnum",campus as "campus" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE()))', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -19,8 +24,11 @@ Router.get('/campus', (req, res) => {
     })
 });
 
-Router.get('/campus/student', (req, res) => {
-    connection.query('SELECT count(*) as "studNum" FROM screen where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=9', (err, rows, fields) => {
+Router.post('/campus/student', (req, res) => {
+
+    campus = req.body.campusID;
+
+    connection.query('SELECT count(*) as "studNum" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=9', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -29,8 +37,11 @@ Router.get('/campus/student', (req, res) => {
     })
 });
 
-Router.get('/campus/staff', (req, res) => {
-    connection.query('SELECT count(*) as "staffNum" FROM screen where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=6', (err, rows, fields) => {
+Router.post('/campus/staff', (req, res) => {
+
+    campus = req.body.campusID;
+
+    connection.query('SELECT count(*) as "staffNum" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=6', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -39,8 +50,24 @@ Router.get('/campus/staff', (req, res) => {
     })
 });
 
-Router.get('/campus/constractor', (req, res) => {
-    connection.query('SELECT count(*) as "constNum" FROM screen where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE()))', (err, rows, fields) => {
+// Router.post('/campus/constractor', (req, res) => {
+
+//     campus = req.body.campusID;
+
+//     connection.query('SELECT count(*) as "constNum" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE()))', (err, rows, fields) => {
+//         if(!err){
+//             res.send(rows)
+//         }else{
+//             console.log(err)
+//         }
+//     })
+// });
+
+Router.post('/campus/visitor', (req, res) => {
+
+    campus = req.body.campusID;
+
+    connection.query('SELECT count(*) as "visNum" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and stud_staff is NULL', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -49,18 +76,11 @@ Router.get('/campus/constractor', (req, res) => {
     })
 });
 
-Router.get('/campus/visitor', (req, res) => {
-    connection.query('SELECT count(*) as "visNum" FROM screen where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE())) and stud_staff is NULL', (err, rows, fields) => {
-        if(!err){
-            res.send(rows)
-        }else{
-            console.log(err)
-        }
-    })
-});
+Router.post('/campus/symptoms', (req, res) => {
 
-Router.get('/campus/symptoms', (req, res) => {
-    connection.query('SELECT count(*) as "sympNum" FROM screen where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE())) and temp > 36.7', (err, rows, fields) => {
+    campus = req.body.campusID;
+
+    connection.query('SELECT count(*) as "sympNum" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and temp > 36.7', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -70,8 +90,11 @@ Router.get('/campus/symptoms', (req, res) => {
 });
 
 //Weekly 
-Router.get('/campus/weekly', (req, res) => {
-    connection.query('SELECT count(*) as totWeek FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate())', (err, rows, fields) => {
+Router.post('/campus/weekly', (req, res) => {
+
+    campus = req.body.campusID;
+
+    connection.query('SELECT count(*) as totWeek FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate())', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -80,8 +103,11 @@ Router.get('/campus/weekly', (req, res) => {
     })
 }); //done
 
-Router.get('/campus/student/weekStud', (req, res) => {
-    connection.query('SELECT count(*) as studNum FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and length(stud_staff)=9', (err, rows, fields) => {
+Router.post('/campus/student/weekStud', (req, res) => {
+
+    campus = req.body.campusID;
+
+    connection.query('SELECT count(*) as studNum FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and length(stud_staff)=9', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -90,8 +116,10 @@ Router.get('/campus/student/weekStud', (req, res) => {
     })
 });
 
-Router.get('/campus/staff/weekStaff', (req, res) => {
-    connection.query('SELECT count(*) as staffNum FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and length(stud_staff)=6', (err, rows, fields) => {
+Router.post('/campus/staff/weekStaff', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as staffNum FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and length(stud_staff)=6', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -100,8 +128,10 @@ Router.get('/campus/staff/weekStaff', (req, res) => {
     })
 });
 
-Router.get('/campus/constractor/weekCons', (req, res) => {
-    connection.query('SELECT count(*) as "constNum" FROM screen,user where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE())) and role = "constractor"', (err, rows, fields) => {
+Router.post('/campus/constractor/weekCons', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as "constNum" FROM screen,user where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and role = "constractor"', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -111,7 +141,9 @@ Router.get('/campus/constractor/weekCons', (req, res) => {
 });
 
 Router.get('/campus/visitor/weekVis', (req, res) => {
-    connection.query('SELECT count(*) as visNum FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and stud_staff is NULL', (err, rows, fields) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as visNum FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and stud_staff is NULL', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -120,8 +152,10 @@ Router.get('/campus/visitor/weekVis', (req, res) => {
     })
 });
 
-Router.get('/campus/symptoms/weekSymp', (req, res) => {
-    connection.query('SELECT count(*) as "sympNum" FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and temp > 36.7', (err, rows, _fields) => {
+Router.post('/campus/symptoms/weekSymp', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as "sympNum" FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and temp > 36.7', (err, rows, _fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -134,8 +168,10 @@ Router.get('/campus/symptoms/weekSymp', (req, res) => {
 
 //beginning of monthly
 // we only need to change the date by month
-Router.get('/campus/monthly', (req, res) => {
-    connection.query('SELECT count(*) as totnum FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate())', (err, rows, fields) => {
+Router.post('/campus/monthly', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as totnum,campus FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate())', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -144,8 +180,10 @@ Router.get('/campus/monthly', (req, res) => {
     })
 });
 
-Router.get('/campus/student/monthStud', (req, res) => {
-    connection.query('SELECT count(*) as studNum FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and length(stud_staff)=9', (err, rows, fields) => {
+Router.post('/campus/student/monthStud', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as studNum FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and length(stud_staff)=9', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -154,8 +192,10 @@ Router.get('/campus/student/monthStud', (req, res) => {
     })
 });
 
-Router.get('/campus/staff/monthStaff', (req, res) => {
-    connection.query('SELECT count(*) as staffNum FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and length(stud_staff)=6', (err, rows, fields) => {
+Router.post('/campus/staff/monthStaff', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as staffNum FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and length(stud_staff)=6', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -164,8 +204,10 @@ Router.get('/campus/staff/monthStaff', (req, res) => {
     })
 });
 
-Router.get('/campus/constractor/monthCons', (req, res) => {
-    connection.query('SELECT count(*) as "constNum" FROM screen,user where camp_id = "soshs" and screen_date = (SELECT DATE(SYSDATE())) and role = "constractor"', (err, rows, fields) => {
+Router.post('/campus/constractor/monthCons', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as "constNum" FROM screen,user where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and role = "constractor"', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -174,8 +216,10 @@ Router.get('/campus/constractor/monthCons', (req, res) => {
     })
 });
 
-Router.get('/campus/visitor/monthVis', (req, res) => {
-    connection.query('SELECT count(*) as visNum FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and stud_staff is NULL', (err, rows, fields) => {
+Router.post('/campus/visitor/monthVis', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as visNum FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and stud_staff is NULL', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -184,8 +228,10 @@ Router.get('/campus/visitor/monthVis', (req, res) => {
     })
 });
 
-Router.get('/campus/symptoms/monthSymp', (req, res) => {
-    connection.query('SELECT count(*) as "sympNum" FROM screen where camp_id = "soshs" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and temp > 36.7', (err, rows, fields) => {
+Router.post('/campus/symptoms/monthSymp', (req, res) => {
+
+    campus = req.body.campusID;
+    connection.query('SELECT count(*) as "sympNum" FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and temp > 36.7', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -195,15 +241,5 @@ Router.get('/campus/symptoms/monthSymp', (req, res) => {
 });
 
 //end of montly
-
-Router.get('/hotspot/:campu', (req, res) => {
-    connection.query('SELECT count(*) as "total_hotspot" FROM screen where camp_id = "'+ req.params.campu +'" and temp > 36.9' , (err, rows, fields) => {
-        if(!err){
-            res.send(rows)
-        }else{
-            res.send(err)
-        }
-    })
-});
 
 module.exports = Router;

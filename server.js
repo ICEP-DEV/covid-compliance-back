@@ -5,6 +5,7 @@ const ScreeningRoutes = require('./routes/screening')
 const LoginRoutes = require('./routes/login')
 const UserRoutes = require('./routes/user')
 const UserStats = require('./routes/statistics')
+const ScreenReport = require('./routes/screen_report')
 const connection = require('./connection');
 const cors = require('cors'); 
 const app = express();
@@ -18,6 +19,7 @@ app.use('/screening', ScreeningRoutes);
 app.use('/login', LoginRoutes);
 app.use('/user', UserRoutes);
 app.use('/statistics', UserStats);
+app.use('/screen_report', ScreenReport);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log('server started on port ' + PORT)); 

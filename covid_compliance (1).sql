@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2021 at 05:22 PM
+-- Generation Time: Sep 16, 2021 at 06:27 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -81,15 +81,21 @@ CREATE TABLE `screen` (
 --
 
 INSERT INTO `screen` (`screen_id`, `full_name`, `phone`, `temp`, `campus`, `cough`, `breathing`, `fever`, `symptoms`, `contact`, `covid_contact`, `travel`, `stud_staff`, `visitor_id`, `camp_id`, `screen_date`, `appointment`) VALUES
-(1, 'Lukie', '0721251254', 32.5, 'soshanguve South Campus', 'Yes', 'Yes', 'Yes', '', 'No', 'Yes', 'Yes', NULL, '910215457080', 'soshs', '2021-09-04', 'checking'),
-(2, NULL, NULL, 34.6, 'soshanguve North Campus', 'Yes', 'Yes', 'Yes', 'No', 'No', 'Yes', 'Yes', 215718121, NULL, 'soshn', '2021-09-07', NULL),
-(3, NULL, NULL, 34.9, 'soshanguve South Campus', 'Yes', 'No', 'No', 'No', 'No', 'No', 'No', 994658, NULL, 'soshs', '2021-09-07', NULL),
-(4, 'Zamokuhle', '0785425425', 35, 'Ga-Rankuwa Campus', 'Yes', 'No', 'No', 'No', 'No', 'No', 'no', NULL, '', 'rank', '2021-09-06', 'interview'),
-(5, 'Zamokuhle', '0785425425', 35, 'Ga-Rankuwa Campus', 'Yes', 'No', 'No', 'No', 'No', 'No', 'no', NULL, '', 'rank', '2021-09-01', 'interview'),
+(1, 'Lukie', '0721251254', 32.5, 'soshanguve South Campus', 'Yes', 'Yes', 'Yes', '', 'No', 'Yes', 'Yes', NULL, '910215457080', 'soshs', '2021-08-16', 'checking'),
+(2, NULL, NULL, 34.6, 'soshanguve South Campus', 'Yes', 'Yes', 'Yes', 'No', 'No', 'Yes', 'Yes', 215718121, NULL, 'soshs', '2021-08-12', NULL),
+(3, NULL, NULL, 36.9, 'soshanguve South Campus', 'Yes', 'No', 'No', 'No', 'No', 'No', 'No', 994658, NULL, 'soshs', '2021-09-07', NULL),
+(4, 'Zamokuhle', '0785425425', 35, 'Ga-Rankuwa Campus', 'Yes', 'No', 'No', 'No', 'No', 'No', 'no', NULL, '9208235453081', 'rank', '2021-09-06', 'interview'),
+(5, 'Zamokuhle', '0785425425', 35, 'Ga-Rankuwa Campus', 'Yes', 'No', 'No', 'No', 'No', 'No', 'no', NULL, '9402183232344', 'rank', '2021-09-01', 'interview'),
 (6, NULL, NULL, 32.5, 'Ga-Rankuwa Campus', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 994658, NULL, 'rank', '2021-09-07', NULL),
 (7, NULL, NULL, 34.9, 'Arcadia Campus', 'Yes', 'No', 'Yes', '', 'Yes', 'No', 'Yes', 997475, NULL, 'arc', '2021-09-07', NULL),
 (8, NULL, NULL, 34.9, 'Arcadia Campus', 'Yes', 'No', 'Yes', '', 'Yes', 'No', 'Yes', 997475, NULL, 'arc', '2021-09-07', NULL),
-(9, NULL, NULL, 33.2, 'Arcadia Campus', 'Yes', 'Yes', 'Yes', 'Headache', 'No', 'Yes', 'No', 215243233, NULL, 'arc', '2021-09-09', NULL);
+(9, NULL, NULL, 33.2, 'soshanguve South Campus', 'Yes', 'Yes', 'Yes', 'Headache', 'No', 'Yes', 'No', 215719121, NULL, 'soshs', '2021-09-09', NULL),
+(10, NULL, NULL, 36.5, 'soshanguve South Campus', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No', 'No', 215719120, NULL, 'soshs', '2021-09-10', NULL),
+(11, NULL, NULL, 35.3, 'soshanguve South Campus', 'Yes', 'No', 'Yes', 'No food taste', 'Yes', 'Yes', 'Yes', 976521, NULL, 'soshs', '2021-09-10', NULL),
+(12, 'Puane TR', '0793338234', 35.3, 'soshanguve South Campus', 'Yes', 'No', 'Yes', 'No', 'Yes', 'No', 'No', NULL, '9008265665080', 'soshs', '2021-09-10', 'Need Information on how to apply'),
+(13, NULL, NULL, 37, 'soshanguve South Campus', 'Yes', 'No', 'Yes', 'Headache', 'Yes', 'Yes', 'Yes', 994523, NULL, 'soshs', '2021-09-10', NULL),
+(14, 'Lebo', '0623234543', 36.9, 'soshanguve South Campus', 'Yes', 'Yes', 'No', 'No', 'Yes', 'No', 'No', NULL, '9128265665080', 'soshs', '2021-09-14', 'Need Information on how to apply'),
+(15, NULL, NULL, 35.5, 'soshanguve North Campus', 'Yes', 'No', 'Yes', 'sneezing', 'Yes', 'No', 'No', 215243262, NULL, 'soshn', '2021-09-15', NULL);
 
 -- --------------------------------------------------------
 
@@ -129,7 +135,8 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`stud_num`, `stud_email`, `id_number`) VALUES
-(215243262, '215243262@tut4life.ac.za', '9202015455080');
+(215243262, '215243262@tut4life.ac.za', '9202015455080'),
+(215719121, '215719121@tut4life.ac.za', '9404215654081');
 
 -- --------------------------------------------------------
 
@@ -159,6 +166,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id_number`, `gender`, `marital_status`, `home_lang`, `citizenship`, `email`, `role`, `password`, `fname`, `lname`, `address`, `phone`) VALUES
 ('9202015455080', 'female', 'single', 'Sepedi', 'RSA', 'rudolphpuane@tut4life.ac.za', 'student', '12345', 'Jane', 'Van wyk', 'Aubrey matlala soshanguve 0152', '0784512365'),
 ('9210105915048', 'Male', 'Single', 'isiZulu', 'RSA', 'mkhonkosi28@gmail.com', 'staff', 'nhlanhla', 'Tholinhlanhla', 'Hlophe', 'Piet Retief 2380', '0769994524'),
+('9404215654081', 'Male', 'Single', 'Sepedi', 'RSA', 'puane@gmail.com', 'student', '123456789', 'Teishi', 'Puane', '2625 Block L 0152', '0793237464'),
 ('9510107980843', 'male', 'single', 'isiZulu', 'RSA', 'hlophe@gmail.com', 'staff', '123456', 'Nhlanhla', 'Hlophe', 'Pretoria 0002', '0797794580'),
 ('9805122540823', 'female', 'single', 'Xhosa', 'RSA', 'jane@gmail.com', 'staff', '12345', 'maria', 'mazibuko', 'Khayilisha Eastern cape', '0723251548');
 
@@ -215,7 +223,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `screen`
 --
 ALTER TABLE `screen`
-  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `screen_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

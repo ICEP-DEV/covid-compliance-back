@@ -10,6 +10,18 @@ app.use(bodyParser.json());
 
 campus = "soshs";
 
+//report
+Router.get('/report', (req, res) => {
+
+    connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number order by screen_date desc', (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err)
+        }
+    })
+});
+
 //daily
 Router.post('/campus', (req, res) => {
     
@@ -128,19 +140,9 @@ Router.post('/campus/staff/weekStaff', (req, res) => {
     })
 });
 
-Router.post('/campus/constractor/weekCons', (req, res) => {
 
-    campus = req.body.campusID;
-    connection.query('SELECT count(*) as "constNum" FROM screen,user where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and role = "constractor"', (err, rows, fields) => {
-        if(!err){
-            res.send(rows)
-        }else{
-            console.log(err)
-        }
-    })
-});
 
-Router.get('/campus/visitor/weekVis', (req, res) => {
+Router.post('/campus/visitor/weekVis', (req, res) => {
 
     campus = req.body.campusID;
     connection.query('SELECT count(*) as visNum FROM screen where camp_id = "'+campus+'" and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -7 Day) and date(sysdate()) and stud_staff is NULL', (err, rows, fields) => {

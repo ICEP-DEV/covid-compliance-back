@@ -88,6 +88,7 @@ Router.post('/stud_staff', (req, res, next) => {
                 res.send(rows);
             }else{
                 console.log(err)
+                console.log("+++")
                 }
             })
     }

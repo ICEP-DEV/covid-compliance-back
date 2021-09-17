@@ -22,6 +22,20 @@ Router.get('/report', (req, res) => {
     })
 });
 
+//run for screen report on admin
+// Router.get('/report', (req, res) => {
+    //days = req.body.numDays;
+    //studStaff = req.body.numStudStaff
+
+//connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+//         if(!err){
+//             res.send(rows)
+//         }else{
+//             console.log(err)
+//         }
+//     })
+// });
+
 //daily
 Router.post('/campus', (req, res) => {
     
@@ -206,17 +220,6 @@ Router.post('/campus/staff/monthStaff', (req, res) => {
     })
 });
 
-Router.post('/campus/constractor/monthCons', (req, res) => {
-
-    campus = req.body.campusID;
-    connection.query('SELECT count(*) as "constNum" FROM screen,user where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and role = "constractor"', (err, rows, fields) => {
-        if(!err){
-            res.send(rows)
-        }else{
-            console.log(err)
-        }
-    })
-});
 
 Router.post('/campus/visitor/monthVis', (req, res) => {
 

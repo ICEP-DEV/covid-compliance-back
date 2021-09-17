@@ -19,12 +19,68 @@ Router.get('/user', verifyToken,(req, res) => {
     });
 });
 
-Router.post('/admin', verifyToken,(req, res) => {
-    jwt.verify(req.token, 'secretkey', (err, authData) => {
-        if(err) {
-            res.sendStatus(403);
-        } else {
-            connection.query('SELECT * FROM screen', (err, rows, fields) => {
+////Admin report
+Router.get('/report', (req, res) => {
+
+    connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number order by screen_date desc', (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err)
+        }
+    })
+});
+
+//run for screen report on admin
+// Router.get('/report', (req, res) => {
+    //days = req.body.numDays;
+    //studStaff = req.body.numStudStaff
+
+//connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+//         if(!err){
+//             res.send(rows)
+//         }else{
+//             console.log(err)
+//         }
+//     })
+// });
+
+
+///end of Admin report
+
+// Router.post('/admin', verifyToken,(req, res) => {
+//     jwt.verify(req.token, 'secretkey', (err, authData) => {
+//         if(err) {
+//             res.sendStatus(403);
+//         } else {
+//             days = req.body.duration;
+//             studStaff = req.body.role;
+
+//             connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+//                 if(!err){
+//                     res.send(rows)
+//                 }else{
+//                     console.log(err)
+//                 }
+//             })
+//         }
+//     });
+// });
+Router.post('/admin',(req, res) => {
+        days = req.body.duration;
+        studStaff = req.body.role;
+        if(studStaff == 6)
+        {
+            connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                            if(!err){
+                                res.send(rows)
+                            }else{
+                                console.log(err)
+                            }
+                        })
+        }
+        else if(studStaff == 9){
+            connection.query('SELECT * FROM screen,student,user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
                 if(!err){
                     res.send(rows)
                 }else{
@@ -32,7 +88,8 @@ Router.post('/admin', verifyToken,(req, res) => {
                 }
             })
         }
-    });
+
+            
 });
 
 Router.post('/stud_staff', verifyToken,(req, res) => {

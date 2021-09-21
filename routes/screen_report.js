@@ -69,24 +69,71 @@ Router.get('/report', (req, res) => {
 Router.post('/admin',(req, res) => {
         days = req.body.duration;
         studStaff = req.body.role;
+        choice = req.body.temp
+
         if(studStaff == 6)
         {
-            connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+            if(choice === "above")
+            {
+                connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp >= 37 and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
                             if(!err){
                                 res.send(rows)
                             }else{
                                 console.log(err)
                             }
                         })
+            }else if(choice==="below")
+            {
+                connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp < 37 and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }else if(choice==="all")
+            {
+                connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp >= 0 and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows);
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }
+            
         }
         else if(studStaff == 9){
-            connection.query('SELECT * FROM screen,student,user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
-                if(!err){
-                    res.send(rows)
-                }else{
-                    console.log(err)
-                }
-            })
+
+            if(choice === "above")
+            {
+
+                connection.query('SELECT * FROM screen,student,user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp >= 37 and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }else if(choice==="below")
+            {
+                connection.query('SELECT * FROM screen,student,user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp < 37 and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }else if(choice === "all")
+            {
+                connection.query('SELECT * FROM screen,student,user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp >= 0 and length(stud_staff)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }
         }
 
             

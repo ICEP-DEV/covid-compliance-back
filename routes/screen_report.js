@@ -31,6 +31,18 @@ Router.get('/report', (req, res) => {
     })
 });
 
+Router.get('/delete/:id', (req, res) => {
+
+    console.log(id);
+
+    connection.query('DELETE FROM screen WHERE screen_id = ' + id, (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err)
+        }
+    })
+});
 //run for screen report on admin
 // Router.get('/report', (req, res) => {
     //days = req.body.numDays;

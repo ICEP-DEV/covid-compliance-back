@@ -9,6 +9,16 @@ const jwt =             require('jsonwebtoken');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
+Router.post('/dashboard', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+            res.send(authData.user)
+        }
+    });
+});
+
 Router.post('/admin-profile', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if(err) {

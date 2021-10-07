@@ -31,13 +31,23 @@ Router.get('/report', (req, res) => {
     })
 });
 
-Router.get('/delete/:id', (req, res) => {
+Router.delete('/delete/:id', (req, res) => {
 
-    console.log(id);
-
-    connection.query('DELETE FROM screen WHERE screen_id = ' + id, (err, rows, fields) => {
+    // console.log(id);
+    console.log(req.params.id)
+   
+    connection.query('DELETE FROM screen WHERE screen_id = ' +  req.params.id, (err, rows, fields) => {
         if(!err){
-            res.send(rows)
+
+            connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number order by screen_date desc', (err, rows, fields) => {
+                if(!err){
+                    res.send(rows)
+                }else{
+                    console.log(err)
+                }
+            })
+            // res.send("deleted successfuly")
+            console.log('deleted successfuly')
         }else{
             console.log(err)
         }

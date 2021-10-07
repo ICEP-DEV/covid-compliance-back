@@ -19,6 +19,16 @@ Router.get('/', (req, res) => {
     })
 });
 
+Router.get('/allscreens', (req, res) => {
+    connection.query('SELECT COUNT(*) AS totScreen FROM screen', (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err)
+        }
+    })
+});
+
 Router.post('/stud_staff', (req, res, next) => {
 
     screen_id = 0;

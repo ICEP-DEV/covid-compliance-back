@@ -81,6 +81,16 @@ Router.get('/visitor', (req, res) => {
     })
 });
 
+Router.get('/allusers', (req, res) => {
+    connection.query('SELECT COUNT(*) AS total FROM user', (err, rows, fields) => {
+        if(!err){
+            res.send(rows)
+        }else{
+            console.log(err)
+        }
+    })
+});
+
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
     if(typeof bearerHeader !== 'undefined') {

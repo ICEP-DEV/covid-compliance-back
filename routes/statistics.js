@@ -10,18 +10,6 @@ app.use(bodyParser.json());
 
 campus = "soshs";
 
-//report
-Router.get('/report', (req, res) => {
-
-    connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number order by screen_date desc', (err, rows, fields) => {
-        if(!err){
-            res.send(rows)
-        }else{
-            console.log(err)
-        }
-    })
-});
-
 //run for screen report on admin
 // Router.get('/report', (req, res) => {
     //days = req.body.numDays;
@@ -54,7 +42,7 @@ Router.post('/campus/student', (req, res) => {
 
     campus = req.body.campusID;
 
-    connection.query('SELECT count(*) as "studNum" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=9', (err, rows, fields) => {
+    connection.query('SELECT count(*) as "studNum" FROM screen where camp_id = "'+ campus +'" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=9', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{
@@ -67,7 +55,7 @@ Router.post('/campus/staff', (req, res) => {
 
     campus = req.body.campusID;
 
-    connection.query('SELECT count(*) as "staffNum" FROM screen where camp_id = "'+campus+'" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=6', (err, rows, fields) => {
+    connection.query('SELECT count(*) as "staffNum" FROM screen where camp_id = "'+ campus +'" and screen_date = (SELECT DATE(SYSDATE())) and length(stud_staff)=6', (err, rows, fields) => {
         if(!err){
             res.send(rows)
         }else{

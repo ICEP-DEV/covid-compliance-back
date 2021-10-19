@@ -19,23 +19,36 @@ Router.get('/user', verifyToken,(req, res) => {
     });
 });
 
-////Admin report
-Router.get('/report', (req, res) => {
+////staff report
 
-    connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number order by screen_date desc', (err, rows, fields) => {
-        if(!err){
-            res.send(rows)
-        }else{
-            console.log(err)
+Router.post('/report', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+            if (authData.user[0].role === 'student'){
+                connection.query('SELECT * FROM screen, student, user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and student.stud_num = "'+authData.user[0].stud_num+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }
+            if (authData.user[0].role === 'staff'){
+                connection.query('SELECT * FROM screen,staff,user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and staff.staff_num = "'+authData.user[0].staff_num+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }
         }
-    })
+    });
 });
 
 Router.delete('/delete/:id', (req, res) => {
-
-    // console.log(id);
-    console.log(req.params.id)
-   
     connection.query('DELETE FROM screen WHERE screen_id = ' +  req.params.id, (err, rows, fields) => {
         if(!err){
 

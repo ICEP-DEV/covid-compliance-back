@@ -90,22 +90,40 @@ Router.post('/stud_staff', (req, res, next) => {
 
     date = year+'-'+month+'-'+day;
                 //screen_id full_name phone temp campus cough breathing fever symptoms contact covid_contact travel stud_staff visitor_id camp_id screen_date appointment
+                //screen_id full_name phone temp campus cough breathing fever symptoms contact covid_contact travel stud_staff visitor_id camp_id screen_date appointment
+
     console.log(pos);
-    if(pos <=2)
+    if(pos <=2 )
     {
-        connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
-            if(!err){
-                res.send(rows);
+        connection.query("SELECT stud_num FROM student WHERE stud_num = '"+ stud_staff +"' ", (error, stu_rows, fields) => {
+            if(stu_rows.length > 0){
+                connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
+                    if(!err){
+                        res.json({stu_message : "Student successfully screened"});
+                    }else{
+                        res.send(err)
+                    }
+                })
+            }else if (stu_rows.length < 0){
+                connection.query("SELECT staff_num FROM staff WHERE staff_num = '"+ stud_staff +"' ", (error, staff_rows, fields) => {
+                    if(staff_rows.length > 0){ 
+                        connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
+                            if(!err){
+                                res.json({stu_message : "Student successfully screened"});
+                            }else{
+                                res.send(err)
+                            }
+                        })
+                    }
+                })
             }else{
-                console.log(err)
-                console.log("+++")
-                }
-            })
+                res.json({ message: "Student or Staff does not exist!"})
+            }
+        })
     }
     else
     {
-        //console.log()
-        alert("Enter correct temp")
+        res.json({ temp_message: "Invalid temperature"})
     }
 
 });

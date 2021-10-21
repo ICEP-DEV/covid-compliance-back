@@ -14,31 +14,6 @@ Router.post('/', (req, res, next) => {
     username = req.body.username;
     password = req.body.password;
 
-    ///checking if username and password are correct in login
-    connection.query("SELECT stud_email FROM student WHERE stud_email = '"+ username +"' ", (error, stu_rows, fields) => {
-        if(stu_rows.length > 0){
-            connection.query("select password from user,student where student.id_number = user.id_number and  student.stud_email = '"+ username +"' ", (err, rows, fields) => {
-                if(rows[0].password != password)
-                {
-                    //successful
-                    res.json({ message: "Incorrect Student password or Username!"})
-                }
-            })
-        }else if (stu_rows.length < 0){
-            connection.query("SELECT staff_email FROM staff WHERE staff_email = '"+ username +"' ", (error, staff_rows, fields) => {
-                if(staff_rows.length > 0){ 
-                    connection.query("select password from user,staff where staff.id_number = user.id_number and  staff.staff_email = '"+ username +"' ", (err, rows, fields) => {
-                        if(rows[0].password != password)
-                        {
-                            //successfully
-                            res.json({ message: "Incorrect Staff password or Username!"})
-                        }
-                    })
-                }
-            })
-        }
-    })
-
     //////////////////////////////////////
 
     if (username.split("@")[1] == "tut.ac.za"){
@@ -64,7 +39,7 @@ Router.post('/', (req, res, next) => {
         })
     }else if(username.length === 0)
     {
-        res.json({ message: "Username is required"})
+        res.json({ message: "Username required."})
     }
     else{
         res.json({ message: "Not TUT Email"})

@@ -95,8 +95,8 @@ Router.post('/stud_staff', (req, res, next) => {
     if(pos <=2)
     {
         if(temp < 50 && temp > 10){
-            connection.query("SELECT stud_num FROM student WHERE stud_num = '"+ stud_staff +"' ", (error, stu_rows, fields) => {
-                if(stu_rows.length > 0){
+            connection.query("SELECT stud_num,staff_num FROM student,staff WHERE stud_num = '"+ stud_staff +"' OR staff_num = '"+ stud_staff +"'", (error, stu_rows, fields) => {
+                if(stu_rows.length > 0 ){
                     connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
                         if(!err){
                             res.json({stu_message : "Student successfully screened"});
@@ -104,23 +104,24 @@ Router.post('/stud_staff', (req, res, next) => {
                             res.send(err)
                         }
                     })
-                }else if (stu_rows.length <= 0){
-                    connection.query("SELECT staff_num FROM staff WHERE staff_num = '"+ stud_staff +"' ", (error, staff_rows, fields) => {
-                        if(staff_rows.length > 0){ 
-                            connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
-                                if(!err){
-                                    res.json({stu_message : "Student successfully screened"});
-                                }else{
-                                    res.send(err)
-                                }
-                            })
-                        }
-                    })
                 }else{
-                    res.json({ message: "Student or Staff does not exist!"})
-                    console.log(stu_rows.length)
+                    res.json({ message: "Student Or Staff does not exist!"})
                 }
             })
+            // connection.query("SELECT staff_num FROM staff WHERE staff_num = '"+ stud_staff +"' ", (error, staff_rows, fields) => {
+            //     if(staff_rows.length > 0){ 
+            //         connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
+            //             if(!err){
+            //                 res.json({stu_message : "Student successfully screened"});
+            //             }else{
+            //                 res.send(err)
+            //             }
+            //         })
+            //     }else{
+            //         res.json({ message: "Staff does not exist!"})
+            //     }
+            // })
+            
         }else{
             res.json({ temp_message: "Temperature range (10-50)"})
         }

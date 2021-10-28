@@ -108,19 +108,6 @@ Router.post('/stud_staff', (req, res, next) => {
                     res.json({ message: "Student Or Staff does not exist!"})
                 }
             })
-            // connection.query("SELECT staff_num FROM staff WHERE staff_num = '"+ stud_staff +"' ", (error, staff_rows, fields) => {
-            //     if(staff_rows.length > 0){ 
-            //         connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
-            //             if(!err){
-            //                 res.json({stu_message : "Student successfully screened"});
-            //             }else{
-            //                 res.send(err)
-            //             }
-            //         })
-            //     }else{
-            //         res.json({ message: "Staff does not exist!"})
-            //     }
-            // })
             
         }else{
             res.json({ temp_message: "Temperature range (10-50)"})

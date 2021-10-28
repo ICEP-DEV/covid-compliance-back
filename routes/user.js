@@ -91,6 +91,26 @@ Router.get('/allusers', (req, res) => {
     })
 });
 
+Router.post('/edit_admin', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+
+    fname = req.body.fname;
+    lname = req.body.lname;
+    email = req.body.email;
+    address = req.body.address;
+
+        var sql = "UPDATE user SET fname = '"+ fname +"', lname = '"+ lname +"', email = '"+ email +"', address = '"+ address +"' WHERE id_number = '"+ authData.user[0].id_number + "'";
+        connection.query(sql, (err, user, fields) => {
+            if (err){
+                console.log(err)
+                console.log(authData)
+            }else{
+                res.json({ message: "record(s) updated"})
+            };
+        });
+    });
+});
+
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
     if(typeof bearerHeader !== 'undefined') {

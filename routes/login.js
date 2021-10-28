@@ -41,7 +41,7 @@ Router.post('/', (req, res, next) => {
     {
         res.json({ message: "Username required."})
     }
-    else{
+    else{ 
         res.json({ message: "Not TUT Email"})
     }
 });

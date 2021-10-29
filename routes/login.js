@@ -50,7 +50,7 @@ Router.get('/refrash_token', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         console.log(authData.user)
         stud_staff = authData.user[0].staff_email;
-        if (stud_staff == "undefined"){
+        if (stud_staff === undefined){
             stud_staff = authData.user[0].stud_email;
         }
         if (stud_staff.split("@")[1] == "tut.ac.za"){
@@ -64,7 +64,7 @@ Router.get('/refrash_token', verifyToken,(req, res) => {
                 }
             })
         }else if (stud_staff.split("@")[1] == "tut4life.ac.za"){
-            connection.query("SELECT * FROM user u, student s WHERE s.id_number = u.id_number AND s.stud_email = '"+ authData.user[0].username +"' AND u.password = '"+ authData.user[0].password +"'", (err, user, fields) => {
+            connection.query("SELECT * FROM user u, student s WHERE s.id_number = u.id_number AND s.stud_email = '"+ authData.user[0].stud_email +"' AND u.password = '"+ authData.user[0].password +"'", (err, user, fields) => {
                 if(user.length === 0){   
                     res.send(err);
                     res.json({ message: "Not valid username or password" })

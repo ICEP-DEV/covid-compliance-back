@@ -94,18 +94,20 @@ Router.get('/allusers', (req, res) => {
 Router.post('/edit_admin', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
 
-    fname = req.body.fname;
-    lname = req.body.lname;
-    email = req.body.email;
-    address = req.body.address;
+    let new_data = {
+        fname: req.body.fname,
+        lname: req.body.lname,
+        email: req.body.email,
+        address: req.body.address
+    }
 
-        var sql = "UPDATE user SET fname = '"+ fname +"', lname = '"+ lname +"', email = '"+ email +"', address = '"+ address +"' WHERE id_number = '"+ authData.user[0].id_number + "'";
+        var sql = "UPDATE user SET fname = '"+ new_data.fname +"', lname = '"+ new_data.lname +"', email = '"+ new_data.email +"', address = '"+ new_data.address +"' WHERE id_number = '"+ authData.user[0].id_number + "'";
         connection.query(sql, (err, user, fields) => {
             if (err){
                 console.log(err)
                 console.log(authData)
             }else{
-                res.json({ message: "record(s) updated"})
+                res.json({ new_data, message: "record(s) updated"})
             };
         });
     });

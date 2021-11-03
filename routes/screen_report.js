@@ -204,6 +204,35 @@ Router.post('/admin',(req, res) => {
                     }
                 })
             }
+        }else if(studStaff == 13){
+            if(choice === "above")
+            {
+                connection.query('SELECT * FROM screen where screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp >= 37 and length(visitor_id)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                            if(!err){
+                                res.send(rows)
+                            }else{
+                                console.log(err)
+                            }
+                        })
+            }else if(choice==="below")
+            {
+                connection.query('SELECT * FROM screen where screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp < 37 and length(visitor_id)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }else if(choice==="all")
+            {
+                connection.query('SELECT * FROM screen where screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -"'+days+'" Day) and date(sysdate()) and temp >= 0 and length(visitor_id)="'+studStaff+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows);
+                    }else{
+                        console.log(err)
+                    }
+                })
+            }
         }
 
             

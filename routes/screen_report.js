@@ -48,6 +48,41 @@ Router.post('/report', verifyToken,(req, res) => {
     });
 });
 
+
+Router.post('/stud_daily_report', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+                connection.query('SELECT * FROM screen, student, user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and screen_date = (SELECT DATE(SYSDATE())) and student.stud_num = "'+authData.user[0].stud_num+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            
+        }
+    });
+});
+
+Router.post('/stud_weekly_report', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+                connection.query('SELECT * FROM screen, student, user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and student.stud_num = "'+authData.user[0].stud_num+'"', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            
+        }
+    });
+});
+
 Router.delete('/delete/:id', (req, res) => {
     connection.query('DELETE FROM screen WHERE screen_id = ' +  req.params.id, (err, rows, fields) => {
         if(!err){

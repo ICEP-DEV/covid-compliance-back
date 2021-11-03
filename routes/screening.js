@@ -41,7 +41,8 @@ Router.post('/stud_staff', (req, res, next) => {
     contact = req.body.contact;
     covid_contact = req.body.contact_covid;
     travel = req.body.travel;
-    stud_staff = req.body.stud_staff
+    stud_staff = req.body.stud_staff;
+    vaccinated = req.body.vaccinated;
 
     if( campus === "soshanguve South Campus"){
         camp_id = "soshs";
@@ -97,7 +98,7 @@ Router.post('/stud_staff', (req, res, next) => {
         if(temp < 50 && temp > 10){
             connection.query("SELECT stud_num,staff_num FROM student,staff WHERE stud_num = '"+ stud_staff +"' OR staff_num = '"+ stud_staff +"'", (error, stu_rows, fields) => {
                 if(stu_rows.length > 0 ){
-                    connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
+                    connection.query("INSERT INTO screen VALUES('"+ screen_id +"',NULL,NULL, '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"','"+ vaccinated +"', '"+ stud_staff +"', NULL,'"+ camp_id +"','"+ date +"',NULL)", (err, rows, fields) => {
                         if(!err){
                             res.json({stu_message : "Student successfully screened"});
                         }else{
@@ -140,6 +141,7 @@ Router.post('/visitor', (req, res, next) => {
     full_name = req.body.fullname;
     appointment = req.body.appointment;
     phone = req.body.phone;
+    vaccinated = req.body.vaccinated;
     camp_id ="";
 
     if( campus === "soshanguve South Campus"){
@@ -193,7 +195,7 @@ Router.post('/visitor', (req, res, next) => {
     if(pos <=2)
     {
         if(temp < 50 && temp > 10){
-            connection.query("INSERT INTO screen VALUES('"+ screen_id +"','"+ full_name +"','"+ phone +"', '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"',NULL, '"+ visitor_id +"','"+ camp_id +"','"+ date +"','"+ appointment +"')", (err, rows, fields) => {
+            connection.query("INSERT INTO screen VALUES('"+ screen_id +"','"+ full_name +"','"+ phone +"', '"+ temp +"', '" + campus +"', '"+ cough +"', '"+ breathing +"', '"+ fever +"', '"+ symptoms +"', '"+ contact +"', '"+ covid_contact +"', '"+ travel +"', '"+ vaccinated +"',NULL, '"+ visitor_id +"','"+ camp_id +"','"+ date +"','"+ appointment +"')", (err, rows, fields) => {
                 if(!err){
                     res.send(rows);
                 }else{

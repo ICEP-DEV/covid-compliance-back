@@ -19,7 +19,7 @@ Router.get('/user', verifyToken,(req, res) => {
     });
 });
 
-////staff report
+////student report/////
 
 Router.post('/report', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
@@ -72,6 +72,23 @@ Router.post('/stud_weekly_report', verifyToken,(req, res) => {
             res.sendStatus(403);
         } else {
                 connection.query('SELECT * FROM screen, student, user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and student.stud_num = "'+authData.user[0].stud_num+'"', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            
+        }
+    });
+});
+
+Router.post('/stud_monthly_report', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+                connection.query('SELECT * FROM screen, student, user where screen.stud_staff = student.stud_num and user.id_number = student.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and student.stud_num = "'+authData.user[0].stud_num+'"', (err, rows, fields) => {
                     if(!err){
                         res.send(rows)
                     }else{

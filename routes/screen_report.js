@@ -19,7 +19,6 @@ Router.get('/user', verifyToken,(req, res) => {
     });
 });
 
-////student report/////
 
 Router.post('/report', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
@@ -48,7 +47,7 @@ Router.post('/report', verifyToken,(req, res) => {
     });
 });
 
-
+////student report/////
 Router.post('/stud_daily_report', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if(err) {
@@ -99,6 +98,61 @@ Router.post('/stud_monthly_report', verifyToken,(req, res) => {
         }
     });
 });
+
+///student report ends///
+
+////staff report/////
+Router.post('/staff_daily_report', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+                connection.query('SELECT * FROM screen, staff, user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date = (SELECT DATE(SYSDATE())) and staff.staff_num = "'+authData.user[0].staff_num+'" order by screen_date desc', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            
+        }
+    });
+});
+
+Router.post('/staff_weekly_report', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+                connection.query('SELECT * FROM screen, staff, user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and staff.staff_num = "'+authData.user[0].staff_num+'"', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            
+        }
+    });
+});
+
+Router.post('/staff_monthly_report', verifyToken,(req, res) => {
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if(err) {
+            res.sendStatus(403);
+        } else {
+                connection.query('SELECT * FROM screen, staff, user where screen.stud_staff = staff.staff_num and user.id_number = staff.id_number and screen_date BETWEEN DATE_ADD(date(sysdate()), INTERVAL -1 Month) and date(sysdate()) and staff.staff_num = "'+authData.user[0].staff_num+'"', (err, rows, fields) => {
+                    if(!err){
+                        res.send(rows)
+                    }else{
+                        console.log(err)
+                    }
+                })
+            
+        }
+    });
+});
+///staff report ends///
 
 Router.delete('/delete/:id', (req, res) => {
     connection.query('DELETE FROM screen WHERE screen_id = ' +  req.params.id, (err, rows, fields) => {

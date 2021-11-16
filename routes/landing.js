@@ -28,6 +28,11 @@ Router.get('/:camp_id',(req, res) => {
     })
 });
 
+Router.post('/',(req, res) => {
+    console.log(req.body);
+    res.send("Yes");
+});
+
 // Router.get('/screen_rows/:camp_id', (req, res) => {
 //     connection.query('SELECT count(*) AS total FROM screen where camp_id = "'+req.params.camp_id+'"', (error, total, fields) => {
 //             if(!error){

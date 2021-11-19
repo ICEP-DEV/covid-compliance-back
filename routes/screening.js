@@ -144,6 +144,8 @@ Router.post('/visitor', (req, res, next) => {
     vaccinated = req.body.vaccinated;
     camp_id ="";
 
+    console.log(visitor_id);
+    
     if( campus === "soshanguve South Campus"){
         camp_id = "soshs";
     }

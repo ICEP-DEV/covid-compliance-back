@@ -9,6 +9,7 @@ const jwt =             require('jsonwebtoken');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
+
 // Router.get('/:camp_id',(req, res) => {
 //     tot_v = connection.query('SELECT count(*) AS tot_v FROM screen where camp_id = "'+req.params.camp_id+'" AND vaccinated = "Yes" ');
 //     total = connection.query('SELECT count(*) AS total FROM screen where camp_id = "'+req.params.camp_id+'"');

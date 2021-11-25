@@ -24,7 +24,8 @@ app.use('/statistics', UserStats);
 app.use('/screen_report', ScreenReport);
 app.use('/landing', LandingState);
 app.use('/announcements', Dashboard);
-require("dotenv").config(); //added
 
 
-app.listen(process.env.PORT || 3000); 
+app.listen(process.env.PORT || 3000, ()=> {
+    console.log("port connected server.js");
+}); 

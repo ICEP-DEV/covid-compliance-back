@@ -20,15 +20,13 @@ app.use(cors());
 //     console.log(total);
 // });
 
-Router.get('/reqPolicy',(req, res) => {
-    app.use(function(req,res,next)
-{
-    res.header('Access-Control-Allow-Origin' , "*");
-    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Credentials', true);
-    next();
-})
+Router.get('/reqPolicy',(req, res,next) => {
+    
+        res.header('Access-Control-Allow-Origin' , "*");
+        res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        res.header('Access-Control-Allow-Credentials', true);
+        next();
 });
 
 

@@ -8,6 +8,8 @@ const jwt =             require('jsonwebtoken');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
+const cors = require('cors');
+app.use(cors());
 
 
 // Router.get('/:camp_id',(req, res) => {
@@ -17,6 +19,19 @@ app.use(bodyParser.json());
 //     console.log(tot_v);
 //     console.log(total);
 // });
+
+Router.get('/reqPolicy',(req, res) => {
+    app.use(function(req,res,next)
+{
+    res.header('Access-Control-Allow-Origin' , "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+})
+});
+
+
 
 Router.get('/:camp_id',(req, res) => {
     connection.query('SELECT count(*) AS tot_v FROM screen where camp_id = "'+req.params.camp_id+'" AND vaccinated = "Yes" '  , (err, rows, fields) => {

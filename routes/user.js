@@ -9,6 +9,18 @@ const jwt =             require('jsonwebtoken');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 
+const cors = require('cors');
+app.use(cors());
+
+app.use(function(_req,res,next)
+{
+    res.header('Access-Control-Allow-Origin' , "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+})
+
 Router.post('/dashboard', verifyToken,(req, res) => {
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if(err) {

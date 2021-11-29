@@ -10,6 +10,16 @@ const LandingState = require('./routes/landing')
 const Dashboard = require('./routes/dashboard')
 const connection = require('./connection');
 const cors = require('cors'); 
+
+app.use(function(_req,res,next)
+{
+    res.header('Access-Control-Allow-Origin' , "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
+    next();
+})
+
 const app = express();
 const bodyParser = require('body-parser');
 const ResponseLike = require('responselike');
@@ -22,24 +32,24 @@ app.use(cors());
 // header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 
 // Add headers
-app.use(function (req, res, next) {
+// app.use(function (req, res, next) {
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
+//     // Website you wish to allow to connect
+//     res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     // Request methods you wish to allow
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     // Request headers you wish to allow
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
+//     // Set to true if you need the website to include cookies in the requests sent
+//     // to the API (e.g. in case you use sessions)
+//     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Pass to next layer of middleware
-    next();
-});
+//     // Pass to next layer of middleware
+//     next();
+// });
 
 app.use('/registration', RegistrationRoutes);
 app.use('/screening', ScreeningRoutes);
@@ -49,14 +59,6 @@ app.use('/statistics', UserStats);
 app.use('/screen_report', ScreenReport);
 app.use('/landing', LandingState);
 app.use('/announcements', Dashboard);
-
-app.use(function(req,res,next)
-{
-    res.header('Access-Control-Allow-Origin' , "*");
-    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-})
 
 app.listen(process.env.PORT || 3000, ()=> {
     console.log("port connected server.js");

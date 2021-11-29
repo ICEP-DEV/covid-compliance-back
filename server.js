@@ -11,6 +11,14 @@ const Dashboard = require('./routes/dashboard')
 const connection = require('./connection');
 const cors = require('cors'); 
 
+const app = express();
+const bodyParser = require('body-parser');
+const ResponseLike = require('responselike');
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
+app.use(cors());
+
 app.use(function(_req,res,next)
 {
     res.header('Access-Control-Allow-Origin' , "*");
@@ -19,17 +27,6 @@ app.use(function(_req,res,next)
     res.header('Access-Control-Allow-Credentials', true);
     next();
 })
-
-const app = express();
-const bodyParser = require('body-parser');
-const ResponseLike = require('responselike');
-
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json());
-app.use(cors());
-// header('Access-Control-Allow-Origin: *');
-// header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-// header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 
 // Add headers
 // app.use(function (req, res, next) {

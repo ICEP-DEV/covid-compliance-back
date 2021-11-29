@@ -9,7 +9,6 @@ const nodemailer =      require('nodemailer');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
-const cors = require('cors'); 
 
 Router.post('/',(req, res) => {
     const output = `

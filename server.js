@@ -11,7 +11,8 @@ const Dashboard = require('./routes/dashboard')
 const connection = require('./connection');
 const cors = require('cors'); 
 const app = express();
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const ResponseLike = require('responselike');
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
@@ -24,7 +25,7 @@ app.use(cors());
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://covid-compliance.herokuapp.com');
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -48,6 +49,14 @@ app.use('/statistics', UserStats);
 app.use('/screen_report', ScreenReport);
 app.use('/landing', LandingState);
 app.use('/announcements', Dashboard);
+
+app.use(function(req,res,next)
+{
+    res.header('Access-Control-Allow-Origin' , "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
 
 app.listen(process.env.PORT || 3000, ()=> {
     console.log("port connected server.js");

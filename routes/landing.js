@@ -45,6 +45,7 @@ Router.get('/:camp_id',(req, res) => {
 Router.post('/',(req, res) => {
     console.log(req.body);
     res.send("Yes");
+    console.log("i am working fine");
 });
 
 // Router.get('/screen_rows/:camp_id', (req, res) => {
